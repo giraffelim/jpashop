@@ -26,7 +26,7 @@ public class ItemController {
         Book book = new Book();
         book.setName(form.getName());
         book.setPrice(form.getPrice());
-        book.setStockQuantity(book.getStockQuantity());
+        book.setStockQuantity(form.getStockQuantity());
         book.setAuthor(form.getAuthor());
         book.setIsbn(form.getIsbn());
 
@@ -41,6 +41,12 @@ public class ItemController {
         itemService.save(book);
         return "redirect:/items";
 
+    }
+
+    @GetMapping("/items")
+    public String list(Model model){
+        model.addAttribute("items", itemService.findItems());
+        return "items/itemList";
     }
 
 }
