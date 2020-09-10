@@ -1,5 +1,6 @@
 package com.girrafelim.study.service;
 
+import com.girrafelim.study.domain.item.Book;
 import com.girrafelim.study.domain.item.Item;
 import com.girrafelim.study.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,15 @@ public class ItemService {
     @Transactional
     public void save(Item item){
         itemRepository.save(item);
+    }
+
+    @Transactional
+    public void updateItem(Long itemId, Book param) {
+        // 트랜잭션 안에서 조회를 해야 영속 상태로 조회가 된다.
+        Item findItem = itemRepository.findOne(itemId); // 실제 영속성 컨텍스트에 있는 엔티티를 가져온다 [ 영속 상태 ].
+        findItem.setPrice(param.getPrice());
+        findItem.setName(param.getName());
+        findItem.setStockQuantity(param.getStockQuantity());
     }
 
     public List<Item> findItems(){
